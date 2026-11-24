@@ -1,0 +1,136 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1400' height='1095' viewBox='0 0 1400 1095'>
+<rect width='1400' height='1095' fill='#ffffff'/>
+<text x='40' y='44' font-size='26' text-anchor='start' font-weight='bold' fill='#222' font-family='Helvetica, Arial, sans-serif' >Bedroom alarm clock: wiring</text>
+<text x='40' y='72' font-size='15' text-anchor='start' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >Freenove FNK0115Q 5" board, seen from the back. All board connections use its 4-pin JST headers (cables come with the board).</text>
+<rect x='80' y='110' width='900' height='330' rx='14' fill='#f6c35a' stroke='#b8862a' stroke-width='3'/>
+<text x='104' y='146' font-size='20' text-anchor='start' font-weight='bold' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif' >Freenove ESP32-S3 Display FNK0115Q (back)</text>
+<rect x='110' y='170' width='150' height='110' rx='6' fill='#5b5f66' stroke='#333' stroke-width='2'/>
+<text x='185' y='230' font-size='16' text-anchor='middle' font-weight='normal' fill='#fff' font-family='Helvetica, Arial, sans-serif' >ESP32-S3</text>
+<text x='956' y='146' font-size='13' text-anchor='end' font-weight='normal' fill='#7a5600' font-family='Helvetica, Arial, sans-serif' >on-board speaker amp (NS4168)</text>
+<rect x='256.0' y='406' width='88' height='34' rx='4' fill='#f4f1ea' stroke='#999' stroke-width='1.5'/>
+<text x='300' y='340' font-size='14' text-anchor='middle' font-weight='bold' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif' >P3 SPI</text>
+<text transform='translate(278.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO19</text>
+<circle cx='273.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(296.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO11</text>
+<circle cx='291.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(314.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO12</text>
+<circle cx='309.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(332.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO13</text>
+<circle cx='327.0' cy='423' r='4' fill='#777'/>
+<rect x='386.0' y='406' width='88' height='34' rx='4' fill='#f4f1ea' stroke='#999' stroke-width='1.5'/>
+<text x='430' y='340' font-size='14' text-anchor='middle' font-weight='bold' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif' >P4 I2C</text>
+<text transform='translate(408.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO17</text>
+<circle cx='403.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(426.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO18</text>
+<circle cx='421.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(444.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO19</text>
+<circle cx='439.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(462.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO20</text>
+<circle cx='457.0' cy='423' r='4' fill='#777'/>
+<rect x='516.0' y='406' width='88' height='34' rx='4' fill='#f4f1ea' stroke='#999' stroke-width='1.5'/>
+<text x='560' y='340' font-size='14' text-anchor='middle' font-weight='bold' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif' >P5</text>
+<text transform='translate(538.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>GND</text>
+<circle cx='533.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(556.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>3V3</text>
+<circle cx='551.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(574.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO17</text>
+<circle cx='569.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(592.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO18</text>
+<circle cx='587.0' cy='423' r='4' fill='#777'/>
+<rect x='646.0' y='406' width='88' height='34' rx='4' fill='#f4f1ea' stroke='#999' stroke-width='1.5'/>
+<text x='690' y='340' font-size='14' text-anchor='middle' font-weight='bold' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif' >P6</text>
+<text transform='translate(668.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>GND</text>
+<circle cx='663.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(686.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>3V3</text>
+<circle cx='681.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(704.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO17</text>
+<circle cx='699.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(722.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>IO18</text>
+<circle cx='717.0' cy='423' r='4' fill='#777'/>
+<rect x='789.0' y='406' width='52' height='34' rx='4' fill='#f4f1ea' stroke='#999' stroke-width='1.5'/>
+<text x='815' y='340' font-size='14' text-anchor='middle' font-weight='bold' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif' >P7 Speaker</text>
+<text transform='translate(811.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>SP-</text>
+<circle cx='806.0' cy='423' r='4' fill='#777'/>
+<text transform='translate(829.0,400) rotate(-90)' font-size='12' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif'>SP+</text>
+<circle cx='824.0' cy='423' r='4' fill='#777'/>
+<rect x='964' y='252' width='30' height='36' rx='5' fill='#c9c9c9' stroke='#666' stroke-width='2'/>
+<text x='956' y='275' font-size='12' text-anchor='end' font-weight='normal' fill='#5a3d00' font-family='Helvetica, Arial, sans-serif' >USB-C</text>
+<circle cx='439.0' cy='423' r='5' fill='#2f6fd6'/>
+<polyline points='439.0,423 439.0,520 590,520' fill='none' stroke='#2f6fd6' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<polyline points='590,520 590,600' fill='none' stroke='#2f6fd6' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='457.0' cy='423' r='5' fill='#e07a2f'/>
+<polyline points='457.0,423 457.0,540 620,540' fill='none' stroke='#e07a2f' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<polyline points='620,540 620,600' fill='none' stroke='#e07a2f' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='663.0' cy='423' r='5' fill='#2b2b2b'/>
+<polyline points='663.0,423 663.0,600' fill='none' stroke='#2b2b2b' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='681.0' cy='423' r='5' fill='#d64545'/>
+<polyline points='681.0,423 681.0,560 710,560' fill='none' stroke='#d64545' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<polyline points='710,560 710,600' fill='none' stroke='#d64545' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<rect x='560' y='600' width='180' height='90' rx='8' fill='#ffffff' stroke='#333' stroke-width='2'/>
+<text x='590' y='622' font-size='12' text-anchor='middle' font-weight='normal' fill='#2f6fd6' font-family='Helvetica, Arial, sans-serif' >SDA</text>
+<text x='624' y='622' font-size='12' text-anchor='middle' font-weight='normal' fill='#e07a2f' font-family='Helvetica, Arial, sans-serif' >SCL</text>
+<text x='663.0' y='622' font-size='12' text-anchor='middle' font-weight='normal' fill='#2b2b2b' font-family='Helvetica, Arial, sans-serif' >GND</text>
+<text x='714' y='622' font-size='12' text-anchor='middle' font-weight='normal' fill='#d64545' font-family='Helvetica, Arial, sans-serif' >VIN</text>
+<text x='650' y='660' font-size='18' text-anchor='middle' font-weight='bold' fill='#222' font-family='Helvetica, Arial, sans-serif' >SHT41</text>
+<text x='650' y='680' font-size='13' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >or SHT31 (GY-SHT31-D)</text>
+<text x='650' y='718' font-size='17' text-anchor='middle' font-weight='bold' fill='#222' font-family='Helvetica, Arial, sans-serif' >Indoor temp + humidity</text>
+<text x='650' y='740' font-size='13' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >outside the case, in the vented pod</text>
+<circle cx='533.0' cy='423' r='5' fill='#2b2b2b'/>
+<polyline points='533.0,423 533.0,455' fill='none' stroke='#2b2b2b' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<path d='M533.0,455 H465.0 a8,8 0 0 0 -16,0 H447.0 a8,8 0 0 0 -16,0 H190' fill='none' stroke='#2b2b2b' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<polyline points='190,455 190,600' fill='none' stroke='#2b2b2b' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='551.0' cy='423' r='5' fill='#d64545'/>
+<polyline points='551.0,423 551.0,470' fill='none' stroke='#d64545' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<path d='M551.0,470 H465.0 a8,8 0 0 0 -16,0 H447.0 a8,8 0 0 0 -16,0 H215' fill='none' stroke='#d64545' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<polyline points='215,470 215,600' fill='none' stroke='#d64545' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='439.0' cy='490' r='5' fill='#2f6fd6'/>
+<polyline points='439.0,490 240,490 240,600' fill='none' stroke='#2f6fd6' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='457.0' cy='505' r='5' fill='#e07a2f'/>
+<path d='M457.0,505 H447.0 a8,8 0 0 0 -16,0 H265' fill='none' stroke='#e07a2f' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<polyline points='265,505 265,600' fill='none' stroke='#e07a2f' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<rect x='153' y='600' width='150' height='90' rx='8' fill='#ffffff' stroke='#333' stroke-width='2'/>
+<text x='190' y='622' font-size='11' text-anchor='middle' font-weight='normal' fill='#2b2b2b' font-family='Helvetica, Arial, sans-serif' >GND</text>
+<text x='217' y='638' font-size='11' text-anchor='middle' font-weight='normal' fill='#d64545' font-family='Helvetica, Arial, sans-serif' >VCC</text>
+<text x='242' y='622' font-size='11' text-anchor='middle' font-weight='normal' fill='#2f6fd6' font-family='Helvetica, Arial, sans-serif' >SDA</text>
+<text x='269' y='638' font-size='11' text-anchor='middle' font-weight='normal' fill='#e07a2f' font-family='Helvetica, Arial, sans-serif' >SCL</text>
+<text x='228' y='664' font-size='18' text-anchor='middle' font-weight='bold' fill='#222' font-family='Helvetica, Arial, sans-serif' >BH1750</text>
+<text x='228' y='682' font-size='12' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >GY-302 (ADDR open)</text>
+<text x='228' y='718' font-size='17' text-anchor='middle' font-weight='bold' fill='#222' font-family='Helvetica, Arial, sans-serif' >Room light sensor</text>
+<text x='228' y='740' font-size='13' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >face up, under the slot on top</text>
+<text x='250' y='377' font-size='12' text-anchor='end' font-weight='normal' fill='#777' font-family='Helvetica, Arial, sans-serif' >IO11-13: free</text>
+<circle cx='806.0' cy='423' r='5' fill='#7b55e0'/>
+<polyline points='806.0,423 806.0,590 840,590' fill='none' stroke='#7b55e0' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='824.0' cy='423' r='5' fill='#7b55e0'/>
+<polyline points='824.0,423 824.0,570 880,570' fill='none' stroke='#7b55e0' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<polyline points='840,590 840,620' fill='none' stroke='#7b55e0' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<polyline points='880,570 880,620' fill='none' stroke='#7b55e0' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'/>
+<circle cx='860' cy='665' r='45' fill='#eee' stroke='#333' stroke-width='2'/>
+<circle cx='860' cy='665' r='22' fill='#ccc' stroke='#555' stroke-width='1.5'/>
+<text x='860' y='738' font-size='17' text-anchor='middle' font-weight='bold' fill='#222' font-family='Helvetica, Arial, sans-serif' >Speaker</text>
+<text x='860' y='760' font-size='13' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >comes with the board</text>
+<rect x='1180' y='240' width='170' height='60' rx='10' fill='#eef3fb' stroke='#333' stroke-width='2'/>
+<text x='1265' y='266' font-size='15' text-anchor='middle' font-weight='bold' fill='#222' font-family='Helvetica, Arial, sans-serif' >USB-C supply</text>
+<text x='1265' y='286' font-size='12' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >5 V 2 A</text>
+<polyline points='1180,270 1120,270' fill='none' stroke='#888' stroke-width='6' stroke-linejoin='round' stroke-linecap='round'/>
+<rect x='1060' y='236' width='60' height='68' rx='30' fill='#e8e8e8' stroke='#333' stroke-width='2'/>
+<text x='1090' y='275' font-size='12' text-anchor='middle' font-weight='normal' fill='#222' font-family='Helvetica, Arial, sans-serif' >socket</text>
+<text x='1090' y='326' font-size='12' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >Panel socket in</text>
+<text x='1090' y='341' font-size='12' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >the back cover</text>
+<polyline points='1060,270 994,270' fill='none' stroke='#888' stroke-width='6' stroke-linejoin='round' stroke-linecap='round'/>
+<text x='1090' y='366' font-size='12' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >Inside: flat right-angle</text>
+<text x='1090' y='381' font-size='12' text-anchor='middle' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >USB-C cable to the board</text>
+<rect x='1000' y='610' width='380' height='214' rx='10' fill='#fafafa' stroke='#bbb' stroke-width='1.5' stroke-dasharray='6 4'/>
+<text x='1020' y='642' font-size='16' text-anchor='start' font-weight='bold' fill='#222' font-family='Helvetica, Arial, sans-serif' >Power</text>
+<text x='1020' y='670' font-size='14' text-anchor='start' font-weight='normal' fill='#333' font-family='Helvetica, Arial, sans-serif' >No battery. After a power cut the clock</text>
+<text x='1020' y='694' font-size='14' text-anchor='start' font-weight='normal' fill='#333' font-family='Helvetica, Arial, sans-serif' >restarts, gets the time from WiFi and rings any</text>
+<text x='1020' y='718' font-size='14' text-anchor='start' font-weight='normal' fill='#333' font-family='Helvetica, Arial, sans-serif' >alarm it missed (up to 30 minutes late).</text>
+<text x='1020' y='742' font-size='14' text-anchor='start' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >Part: flat right-angle USB-C to panel-mount</text>
+<text x='1020' y='766' font-size='14' text-anchor='start' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >USB-C socket cable, 30 cm (Amazon B0FQNPK1SQ).</text>
+<text x='1020' y='790' font-size='14' text-anchor='start' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >It carries data, so uploads work through the</text>
+<text x='1020' y='814' font-size='14' text-anchor='start' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >back socket.</text>
+<rect x='1000' y='835' width='380' height='118' rx='10' fill='#fafafa' stroke='#bbb' stroke-width='1.5' stroke-dasharray='6 4'/>
+<text x='1020' y='867' font-size='16' text-anchor='start' font-weight='bold' fill='#222' font-family='Helvetica, Arial, sans-serif' >Free pins</text>
+<text x='1020' y='895' font-size='14' text-anchor='start' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >IO11, IO12 and IO13 (P3) are spare. P3 pin 1 is</text>
+<text x='1020' y='919' font-size='14' text-anchor='start' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >IO19 (I2C data). Leave IO17 / IO18 alone: the</text>
+<text x='1020' y='943' font-size='14' text-anchor='start' font-weight='normal' fill='#555' font-family='Helvetica, Arial, sans-serif' >speaker amp uses them. Keep the SD slot empty.</text>
+</svg>

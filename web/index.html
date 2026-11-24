@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Alarm Clock">
+<meta name="theme-color" content="#0A0C10">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" href="icon.png">
+<title>Alarm Clock</title>
+<!-- Settings page served by the clock at http://alarmclock.local. Edit this file; it is
+     compressed into the firmware at build time (tools/embed_web.py). Opened straight from
+     disk (file://) it shows sample data, for previewing changes without a clock. -->
+<style>
+:root {
+  --bg: #0A0C10; --card: #14171D; --line: #232832; --text: #F2E9DC; --muted: #7D8590;
+  --accent: #FFB547; --cool: #6FB7D9; --warn: #E07A5F; --ok: #7CC490;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }  /* .row's display:flex would otherwise win */
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body {
+  font: 16px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+  -webkit-text-size-adjust: 100%;
+}
+main { max-width: 720px; margin: 0 auto; }
+h1 { font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+h2 { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 28px 4px 8px; }
+.card { background: var(--card); border-radius: 16px; padding: 4px 16px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.row > .lbl { flex: 1; }
+.sub { color: var(--muted); font-size: 13px; }
+.now { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
+.now .time { font-size: 44px; font-weight: 300; letter-spacing: -.01em; }
+.now .date { color: var(--muted); }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.tile { background: var(--card); border-radius: 16px; padding: 12px 14px; }
+.tile .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.tile .v { font-size: 30px; font-weight: 300; }
+.tile .v .t { color: var(--accent); } .tile .v .h { color: var(--cool); margin-left: 10px; }
+.tile .s { color: var(--muted); font-size: 14px; }
+.alarm { cursor: pointer; }
+.alarm .at { font-size: 26px; font-weight: 300; }
+.alarm.off .at, .alarm.off .sub { opacity: .45; }
+input, select, button { font: inherit; color: var(--text); }
+input[type=text], input[type=time], input[type=number], select {
+  background: #0F1217; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0;
+}
+input[type=text] { width: 100%; }
+.row input[type=text] { max-width: 60%; }
+input[type=range] { width: 46%; accent-color: var(--accent); }
+.sw { position: relative; width: 50px; height: 30px; flex: none; }
+.sw input { opacity: 0; width: 0; height: 0; }
+.sw span { position: absolute; inset: 0; background: #2A2F38; border-radius: 30px; transition: .2s; }
+.sw span::before { content: ""; position: absolute; width: 24px; height: 24px; left: 3px; top: 3px; background: var(--text); border-radius: 50%; transition: .2s; }
+.sw input:checked + span { background: var(--accent); }
+.sw input:checked + span::before { transform: translateX(20px); background: #1A1205; }
+button { border: 0; border-radius: 12px; padding: 12px 16px; background: #222731; cursor: pointer; }
+button.primary { background: var(--accent); color: #1A1205; font-weight: 600; }
+button.danger { color: var(--warn); }
+button.add { width: 100%; margin-top: 10px; }
+.days { display: flex; gap: 6px; }
+.days button { width: 38px; height: 38px; padding: 0; border-radius: 50%; }
+.days button.on { background: var(--accent); color: #1A1205; font-weight: 600; }
+.sheet { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: flex-end; justify-content: center; z-index: 10; }
+.sheet.open { display: flex; }
+.sheet .panel { background: var(--bg); width: 100%; max-width: 560px; border-radius: 20px 20px 0 0; padding: 16px 16px max(20px, env(safe-area-inset-bottom)); max-height: 92vh; overflow: auto; }
+@media (min-width: 700px) { .sheet { align-items: center; } .sheet .panel { border-radius: 20px; } }
+.sheet .bigtime { font-size: 40px; text-align: center; width: 100%; padding: 10px; }
+.buttons { display: flex; gap: 10px; margin-top: 16px; }
+.buttons button { flex: 1; }
+#toast { position: fixed; left: 50%; bottom: max(24px, env(safe-area-inset-bottom)); transform: translateX(-50%); background: #222731; padding: 10px 16px; border-radius: 12px; opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 20; }
+#toast.show { opacity: 1; }
+#toast.err { color: var(--warn); }
+.status { color: var(--muted); font-size: 13px; margin: 24px 4px 0; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.chips button { padding: 8px 12px; }
+.chips button.on { background: var(--accent); color: #1A1205; font-weight: 600; }
+#slpGo { width: 100%; margin: 4px 0 12px; }
+.demo { background: #2A2112; color: var(--accent); border-radius: 12px; padding: 8px 12px; font-size: 14px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <div id="demo" class="demo" hidden>Preview with sample data (opened from disk, not from the clock).</div>
+  <h1>Alarm Clock</h1>
+  <div class="now"><span class="time" id="time">--:--</span><span class="date" id="date"></span></div>
+  <div class="tiles">
+    <div class="tile"><div class="k">Inside</div><div class="v" id="inside">--</div><div class="s" id="insideS"></div></div>
+    <div class="tile"><div class="k">Outside</div><div class="v" id="outside">--</div><div class="s" id="outsideS"></div></div>
+  </div>
+
+  <h2>Alarms</h2>
+  <div class="card" id="alarms"></div>
+  <button class="add" id="addAlarm">+ Add alarm</button>
+
+  <h2>Sleep sounds</h2>
+  <div class="card">
+    <div class="row"><span class="lbl">Sound</span><div class="chips" id="slpSnd"></div></div>
+    <div class="row"><span class="lbl">Volume</span><input type="range" min="5" max="100" step="5" id="slpVol"></div>
+    <div class="row" style="flex-wrap:wrap;padding:8px 0"><span class="lbl">Stop after</span><div class="chips" id="slpMin"></div></div>
+    <button class="primary" id="slpGo">Play</button>
+  </div>
+
+  <h2>Screen</h2>
+  <div class="card">
+    <div class="row" id="roomRow"><span class="lbl">Room light<div class="sub" id="roomS"></div></span><span id="room"></span></div>
+    <div class="row"><span class="lbl">Brightness</span><input type="range" min="5" max="100" data-k="bright"></div>
+    <div class="row"><span class="lbl">Night mode<div class="sub" id="nightHow">Very dim between these times</div></span><label class="sw"><input type="checkbox" data-k="nightOn"><span></span></label></div>
+    <div class="row nightHours"><span class="lbl">Night starts</span><input type="time" data-k="nightStart"></div>
+    <div class="row nightHours"><span class="lbl">Night ends</span><input type="time" data-k="nightEnd"></div>
+    <div class="row"><span class="lbl">Night brightness</span><input type="range" min="1" max="30" data-k="nightBright"></div>
+    <div class="row"><span class="lbl">A tap at night lights it for</span><select data-k="tapWake"><option value="5">5 s</option><option value="10">10 s</option><option value="15">15 s</option><option value="30">30 s</option><option value="60">1 min</option></select></div>
+  </div>
+
+  <h2>Clock</h2>
+  <div class="card">
+    <div class="row"><span class="lbl">24-hour time</span><label class="sw"><input type="checkbox" data-k="h24"><span></span></label></div>
+    <div class="row"><span class="lbl">Temperature in °F</span><label class="sw"><input type="checkbox" data-k="degF"><span></span></label></div>
+    <div class="row"><span class="lbl">Time zone</span><select data-k="tz" id="tz"></select></div>
+    <div class="row"><span class="lbl">Inside temperature correction<div class="sub">Added to the sensor reading</div></span><input type="number" step="0.5" style="width:90px" id="toff"></div>
+  </div>
+
+  <h2>Weather and tides</h2>
+  <div class="card">
+    <div class="row"><span class="lbl">Location<div class="sub" id="place"></div></span><input type="text" data-k="loc" placeholder="Town, ZIP or lat, lon"></div>
+    <div class="row"><span class="lbl">Weather stations<div class="sub">For rain right now. Blank = nearest two</div></span><input type="text" data-k="wxst" placeholder="e.g. KHAF,KSFO"></div>
+    <div class="row"><span class="lbl">Tide station<div class="sub">NOAA ID, blank = no tides</div></span><input type="text" data-k="tide" placeholder="9414131"></div>
+  </div>
+
+  <div class="status" id="status"></div>
+</main>
+
+<div class="sheet" id="sheet">
+  <div class="panel">
+    <input type="time" class="bigtime" id="eTime">
+    <div class="card" style="margin-top:12px">
+      <div class="row"><span class="lbl">On</span><label class="sw"><input type="checkbox" id="eOn"><span></span></label></div>
+      <div class="row" style="flex-wrap:wrap;padding:8px 0"><span class="lbl">Repeat<div class="sub" id="eDaysS"></div></span><div class="days" id="eDays"></div></div>
+      <div class="row"><span class="lbl">Sound</span><select id="eSnd"></select><button id="ePrev">Preview</button></div>
+      <div class="row"><span class="lbl">Volume</span><input type="range" min="10" max="100" id="eVol"></div>
+      <div class="row"><span class="lbl">Snooze</span><select id="eSnz"><option>5</option><option>7</option><option>9</option><option>10</option><option>15</option><option>20</option><option>30</option></select><span class="sub">min</span></div>
+      <div class="row"><span class="lbl">Start quiet, get louder</span><label class="sw"><input type="checkbox" id="eRamp"><span></span></label></div>
+      <div class="row"><span class="lbl">Sunrise<div class="sub">The screen glows warmer before it rings</div></span><select id="eSun"><option value="0">Off</option><option value="15">15 min</option><option value="20">20 min</option><option value="30">30 min</option></select><button id="eSunPrev">Preview</button></div>
+      <div class="row"><span class="lbl">Skip next time<div class="sub">For a day off; it carries on after</div></span><label class="sw"><input type="checkbox" id="eSkip"><span></span></label></div>
+    </div>
+    <div class="buttons"><button id="eCancel">Cancel</button><button class="danger" id="eDel">Delete</button><button class="primary" id="eSave">Save</button></div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const DAYS = ["S", "M", "T", "W", "T", "F", "S"];
+const DAYNAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const DEMO = location.protocol === "file:";
+let S = null, editing = null, previewing = false;
+
+// ---- talking to the clock ----
+async function api(path, body) {
+  if (DEMO) return demoApi(path, body);
+  const r = await fetch(path, body === undefined ? {} : {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  if (!r.ok) throw new Error(await r.text() || r.statusText);
+  return r.json();
+}
+async function refresh() {
+  try { S = await api("api/state"); render(); }
+  catch (e) { $("status").textContent = "Can't reach the clock: " + e.message; }
+}
+async function save(body, path = "api/settings") {
+  try { S = await api(path, body); render(); toast("Saved"); }
+  catch (e) { toast("Not saved: " + e.message, true); refresh(); }  // show what the clock really has
+}
+function toast(msg, err) {
+  const t = $("toast"); t.textContent = msg; t.className = "show" + (err ? " err" : "");
+  clearTimeout(t._h); t._h = setTimeout(() => t.className = "", 1600);
+}
+
+// ---- formatting ----
+const hm = (h, m) => S.s.h24 ? `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`
+                             : `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
+const minToInput = v => `${String(Math.floor(v / 60)).padStart(2, "0")}:${String(v % 60).padStart(2, "0")}`;
+const inputToMin = s => { const [h, m] = s.split(":").map(Number); return h * 60 + m; };
+function daysText(d) {
+  if (!d) return "Once";
+  if (d === 127) return "Every day";
+  if (d === 62) return "Weekdays";
+  if (d === 65) return "Weekends";
+  return DAYNAMES.filter((_, i) => d & (1 << i)).join(" ");
+}
+const deg = c => c === null ? "--" : Math.round(S.s.degF ? c * 9 / 5 + 32 : c) + "°";
+
+// ---- drawing ----
+function render() {
+  const s = S.s;
+  $("time").textContent = S.time || "--:--";
+  $("date").textContent = S.date || "";
+  $("inside").innerHTML = S.inside.ok ? `<span class="t">${deg(S.inside.t)}</span><span class="h">${Math.round(S.inside.h)}%</span>` : "--";
+  const co2 = S.inside.co2;
+  $("insideS").textContent = !S.inside.ok ? "Sensor not found"
+    : co2 ? `CO2 ${co2.toLocaleString()} ppm · ${S.inside.co2High ? "open a window" : co2 >= 1000 ? "OK" : "fresh"}` : "";
+  $("insideS").style.color = S.inside.co2High ? "var(--warn)" : "";  // same call as the clock's screen
+  const o = S.outside;
+  $("outside").innerHTML = o.ok ? `${deg(o.t)}<span class="h">${o.h === null ? "" : Math.round(o.h) + "%"}</span>` : "--";
+  $("outsideS").textContent = o.ok ? `${o.cond} · H ${deg(o.hi)} L ${deg(o.lo)}` : "";
+
+  const list = $("alarms");
+  list.innerHTML = "";
+  if (!S.alarms.length) list.innerHTML = `<div class="row"><span class="sub">No alarms yet.</span></div>`;
+  for (const a of S.alarms) {
+    const row = document.createElement("div");
+    row.className = "row alarm" + (a.on ? "" : " off");
+    row.innerHTML = `<span class="lbl"><div class="at">${hm(a.h, a.m)}</div><div class="sub">${daysText(a.days)}${a.skip ? " · skipping next" : ""} · ${S.sounds[a.snd]}${a.sun ? " · sunrise " + a.sun + " min" : ""}</div></span>
+      <label class="sw"><input type="checkbox" ${a.on ? "checked" : ""}><span></span></label>`;
+    row.querySelector("input").onclick = ev => { ev.stopPropagation(); save({ i: a.i, on: ev.target.checked, rev: S.alarmsRev }, "api/alarm"); };
+    row.querySelector(".sw").onclick = ev => ev.stopPropagation();
+    row.onclick = () => openEditor(a);
+    list.appendChild(row);
+  }
+  $("addAlarm").hidden = S.alarms.length >= S.maxAlarms;
+
+  // Settings: don't overwrite a field while it's being typed in.
+  for (const el of document.querySelectorAll("[data-k]")) {
+    if (el === document.activeElement) continue;
+    const v = s[el.dataset.k];
+    if (el.type === "checkbox") el.checked = !!v;
+    else if (el.type === "time") el.value = minToInput(v);
+    else el.value = v;
+  }
+  const tz = $("tz");
+  if (!tz.options.length) for (const [label, posix] of S.tzs) tz.add(new Option(label, posix));
+  tz.value = s.tz;
+  if (document.activeElement !== $("toff")) $("toff").value = +(s.degF ? s.toff * 9 / 5 : s.toff).toFixed(1);
+  $("toff").previousElementSibling.querySelector(".sub").textContent = `Added to the sensor reading, in °${s.degF ? "F" : "C"}`;
+  $("place").textContent = S.place ? "Now: " + S.place : "";
+  // With a light sensor the clock dims whenever the room is dark; the hours aren't used.
+  $("nightHow").textContent = S.lightSensor ? "Very dim whenever the room is dark (light sensor)" : "Very dim between these times";
+  for (const r of document.querySelectorAll(".nightHours")) r.hidden = !!S.lightSensor;
+  $("roomRow").hidden = !S.lightSensor;
+  $("room").textContent = S.lux < 10 ? `${S.lux.toFixed(1)} lux` : `${Math.round(S.lux).toLocaleString()} lux`;
+  $("roomS").textContent = `Screen at ${S.backlight}%` + (S.night ? ", night mode" : "");
+  // Sleep sounds
+  const sl = S.sleep;
+  const chips = (box, items, cur, send) => {
+    box.innerHTML = "";
+    for (const [label, v] of items) {
+      const b = document.createElement("button");
+      b.textContent = label; b.className = v === cur ? "on" : "";
+      b.onclick = () => save(send(v), "api/sleep");
+      box.appendChild(b);
+    }
+  };
+  chips($("slpSnd"), S.sleepSounds.map((n, i) => [n, i]), sl.snd, v => ({ snd: v, play: true }));
+  chips($("slpMin"), S.sleepTimers, sl.min, v => ({ min: v }));
+  if (document.activeElement !== $("slpVol")) $("slpVol").value = sl.vol;
+  $("slpGo").textContent = sl.on ? (sl.left >= 0 ? `Stop · ${sl.left} min left` : "Stop") : "Play";
+  $("slpGo").className = sl.on ? "" : "primary";
+  $("status").textContent = `Clock at ${S.ip} · ${S.wifi} · up ${S.up} · memory ${S.heap} KB free, lowest ${S.heapMin} KB`;
+}
+
+// ---- settings: save each one as it changes ----
+for (const el of document.querySelectorAll("[data-k]")) {
+  el.addEventListener("change", () => {
+    let v = el.type === "checkbox" ? el.checked : el.type === "time" ? inputToMin(el.value)
+          : el.type === "range" || el.tagName === "SELECT" && el.dataset.k !== "tz" ? Number(el.value) : el.value.trim();
+    save({ [el.dataset.k]: v });
+  });
+}
+$("slpVol").addEventListener("change", e => save({ vol: Number(e.target.value) }, "api/sleep"));
+$("slpGo").onclick = () => save({ play: !S.sleep.on }, "api/sleep");
+$("toff").addEventListener("change", e => {
+  const v = Number(e.target.value) || 0;
+  save({ toff: S.s.degF ? v * 5 / 9 : v });
+});
+
+// ---- alarm editor ----
+function openEditor(a) {
+  editing = { ...a, rev: S.alarmsRev };  // the clock refuses the save if alarms changed since
+  $("eTime").value = minToInput(a.h * 60 + a.m);
+  $("eOn").checked = a.on;
+  $("eVol").value = a.vol;
+  $("eSnz").value = a.snz;
+  $("eRamp").checked = a.ramp;
+  $("eSkip").checked = a.skip;
+  $("eSun").value = a.sun || 0;
+  const snd = $("eSnd");
+  if (!snd.options.length) S.sounds.forEach((n, i) => snd.add(new Option(n, i)));
+  snd.value = a.snd;
+  drawDays();
+  $("eDel").hidden = a.i < 0;
+  $("sheet").classList.add("open");
+}
+function drawDays() {
+  const box = $("eDays"); box.innerHTML = "";
+  DAYS.forEach((d, i) => {
+    const b = document.createElement("button");
+    b.textContent = d; b.className = editing.days & (1 << i) ? "on" : "";
+    b.onclick = () => { editing.days ^= 1 << i; drawDays(); };
+    box.appendChild(b);
+  });
+  $("eDaysS").textContent = daysText(editing.days);
+}
+async function closeEditor() {
+  if (previewing) await stopPreview();
+  $("sheet").classList.remove("open");
+  editing = null;
+}
+async function stopPreview() {
+  previewing = false; $("ePrev").textContent = "Preview";
+  try { await api("api/preview", { stop: true }); } catch (e) {}
+}
+$("ePrev").onclick = async () => {
+  if (previewing) return stopPreview();
+  previewing = true; $("ePrev").textContent = "Stop";
+  try { await api("api/preview", { snd: Number($("eSnd").value), vol: Number($("eVol").value), ramp: $("eRamp").checked }); }
+  catch (e) { toast("Couldn't play: " + e.message, true); }
+  setTimeout(() => { if (previewing) { previewing = false; $("ePrev").textContent = "Preview"; } }, 20000);  // the clock stops it then
+};
+$("eSunPrev").onclick = async () => {
+  try { await api("api/sunrise/preview", {}); toast("Sunrise preview on the clock: about a minute. Tap the clock to end it."); }
+  catch (e) { toast("Couldn't start it: " + e.message, true); }
+};
+$("eCancel").onclick = closeEditor;
+$("eDel").onclick = async () => { const { i, rev } = editing; await closeEditor(); save({ i, rev }, "api/alarm/delete"); };
+$("eSave").onclick = async () => {
+  const t = inputToMin($("eTime").value || "07:00");
+  const a = { ...editing, h: Math.floor(t / 60), m: t % 60, on: $("eOn").checked, snd: Number($("eSnd").value),
+              vol: Number($("eVol").value), snz: Number($("eSnz").value), ramp: $("eRamp").checked, skip: $("eSkip").checked,
+              sun: Number($("eSun").value) };
+  await closeEditor();
+  save(a, "api/alarm");
+};
+$("sheet").onclick = e => { if (e.target === $("sheet")) closeEditor(); };
+$("addAlarm").onclick = () => openEditor({ i: -1, on: true, h: 7, m: 0, days: 62, snd: 0, vol: 70, snz: 9, ramp: true, skip: false, sun: 0 });
+
+// ---- sample data for previewing from disk ----
+function demoApi(path, body) {
+  if (!window._demo) window._demo = {
+    time: "9:52 AM", date: "Friday, November 13", ip: "192.168.1.50", wifi: "HomeWiFi", up: "1 h 4 min", heap: 61, heapMin: 24, lightSensor: true, lux: 58.3, backlight: 72, night: false,
+    maxAlarms: 10, alarmsRev: 1, place: "Half Moon Bay",
+    inside: { ok: true, t: 21.7, h: 45, co2: 820, co2High: false }, outside: { ok: true, t: 12.2, hi: 13.9, lo: 8.9, h: 90, cond: "Rain" },
+    sounds: ["Chimes", "Soft pulse", "Classic beep", "Rising tones"],
+    sleepSounds: ["Rain", "Ocean"], sleepTimers: [["15 min", 15], ["30 min", 30], ["1 hour", 60], ["2 hours", 120], ["All night", 0]],
+    sleep: { on: false, snd: 0, vol: 30, min: 30, left: -1 },
+    tzs: [["US Eastern", "EST5EDT"], ["US Pacific", "PST8PDT,M3.2.0,M11.1.0"], ["UTC", "UTC0"]],
+    s: { h24: false, degF: true, bright: 80, nightOn: true, nightStart: 1320, nightEnd: 420, nightBright: 2, tapWake: 15,
+         toff: -1.5, tz: "PST8PDT,M3.2.0,M11.1.0", loc: "37.4636, -122.4286", wxst: "KHAF,KSFO", tide: "9414131" },
+    alarms: [{ i: 0, on: true, h: 6, m: 30, days: 62, snd: 0, vol: 70, snz: 9, ramp: true, skip: false, sun: 20 },
+             { i: 1, on: false, h: 8, m: 0, days: 65, snd: 3, vol: 50, snz: 10, ramp: true, skip: false, sun: 0 }],
+  };
+  const d = window._demo;
+  if (path === "api/settings") Object.assign(d.s, body);
+  if (path === "api/alarm") {
+    if (body.i < 0) body.i = Math.max(-1, ...d.alarms.map(a => a.i)) + 1, d.alarms.push(body);
+    else Object.assign(d.alarms.find(a => a.i === body.i), body);
+  }
+  if (path === "api/sleep") {
+    const p = d.sleep; Object.assign(p, body.snd !== undefined ? { snd: body.snd } : {}, body.vol !== undefined ? { vol: body.vol } : {},
+                                      body.min !== undefined ? { min: body.min } : {});
+    if (body.play !== undefined) p.on = body.play;
+    p.left = p.on && p.min ? p.min : -1;
+  }
+  if (path === "api/alarm/delete") d.alarms = d.alarms.filter(a => a.i !== body.i);
+  d.alarms.sort((a, b) => a.h * 60 + a.m - (b.h * 60 + b.m));
+  return Promise.resolve(JSON.parse(JSON.stringify(d)));
+}
+
+$("demo").hidden = !DEMO;
+refresh();
+setInterval(() => { if (!editing && !document.hidden) refresh(); }, 15000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
+</script>
+</body>
+</html>

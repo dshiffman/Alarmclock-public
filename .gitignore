@@ -1,0 +1,8 @@
+.pio/
+.vscode/*
+!.vscode/extensions.json
+*.ppm
+# The clock's file space (your own alarm song, from tools/make_alarm_song.py): not the project's to share
+data/
+# Generated from web/ by tools/embed_web.py on every build
+src/web_files.h
